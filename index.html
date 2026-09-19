@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lu's Teacher's Day Challenge 💕</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#49394a;background:linear-gradient(145deg,#fff0f7,#edf8ff 55%,#fff8dc)}
+main{min-height:100vh;display:grid;place-items:center;padding:18px}.p{width:min(620px,100%);background:#fffffff2;border:3px solid #fff;border-radius:30px;padding:26px 22px;text-align:center;box-shadow:0 18px 55px #78536e2c;overflow:hidden}
+h1,h2{color:#d84b92;line-height:1.08}h1{font-size:clamp(31px,8vw,48px)}h2{font-size:clamp(25px,7vw,38px)}p{font-size:18px;line-height:1.5}.hide{display:none!important}
+.btn,.ans{border:0;padding:15px 18px;margin:7px;font-size:17px;font-weight:800;cursor:pointer}.btn{border-radius:999px;background:#ef5ca8;color:#fff;box-shadow:0 8px 20px #ed69a555}.ans{width:calc(100% - 14px);border-radius:18px;background:#fff;border:2px solid #f0c8dd;color:#49394a}.ans:hover{transform:translateY(-2px)}
+.ok{background:#e5f9e9!important;border-color:#52b96a!important}.no{background:#fff0f0!important;border-color:#e77b7b!important}.prog{height:10px;background:#f3e7ee;border-radius:99px;overflow:hidden;margin:12px 0 22px}.bar{height:100%;width:0;background:linear-gradient(90deg,#ef5ca8,#8b69cf);transition:.3s}
+.card,video{width:100%;border-radius:22px;box-shadow:0 12px 30px #0002;margin-top:14px}.note{background:#fff0f7;border:2px dashed #f39ac1;border-radius:20px;padding:16px;margin:18px 0}.score{font-size:22px;font-weight:900;color:#8b69cf}
+.c{position:fixed;top:-30px;z-index:50;pointer-events:none;font-size:22px;animation:f 3.2s linear forwards}@keyframes f{to{transform:translate(var(--x),110vh) rotate(600deg);opacity:.7}}
+</style></head><body><main><article class="p">
+<section id="welcome"><div style="font-size:46px">🍎 🇬🇧 💕</div><h1>Happy Teacher's Day, Lu!</h1><p>Before you open your surprise…<br><b>you have a challenge!</b> 😄</p><button class="btn" id="startBtn">Start the trivia 🎯</button></section>
+<section id="quiz" class="hide"><div id="count"></div><div class="prog"><div id="bar" class="bar"></div></div><h2 id="question"></h2><div id="answers"></div><p id="feedback"></p><button id="nextBtn" class="btn hide">Next →</button></section>
+<section id="trick" class="hide"><div style="font-size:46px">🤔 ✨ 🍎</div><h2>One last question…</h2><p><b>How many points do you need to be an amazing teacher?</b></p><div id="trickAnswers"><button class="ans trickA">10 points</button><button class="ans trickA">100 points</button><button class="ans trickA">1,000 points!</button></div><div id="trickMessage" class="hide note"><h2>None. 💗</h2><p><b>You already are one.</b></p><button class="btn" id="openBtn">Open my surprise 🎁</button></div></section>
+<section id="final" class="hide"><div style="font-size:46px">🎉 💕 ✨</div><h1>YOU GOT IT!</h1><p class="score" id="score"></p><h2>Happy Teacher's Day, Lu!</h2><p>I have a little surprise for you… 💗</p><img class="card" src="tarjeta-lu.png" alt="Teacher's Day card for Lu">
+<div class="note"><b>But wait… there’s one more surprise! 🎬💕</b></div><video id="vid" controls playsinline preload="metadata"><source src="video-delfina-lu.mp4" type="video/mp4">Your browser does not support video.</video>
+<div id="ending" class="hide note"><h2>Happy Teacher's Day, Lu! 💕</h2><p>Thank you for teaching, inspiring, and making learning brighter.</p><b>With love, Delfina 🎀</b></div></section>
+</article></main>
+<script>
+(()=>{const qs=[
+["What is the best way to start an English class? 🇬🇧",["Good morning!","Good night!","See you tomorrow!"],0],
+["Which word describes an amazing teacher? 💕",["Boring","Wonderful","Sleepy"],1],
+['Complete the sentence: “Lu is the best…”',["Teacher","Dinosaur 🦖","Pizza 🍕"],0],
+["What does a great teacher give her students? ✨",["Homework forever 😱","Confidence to learn","100 pizzas 🍕"],1],
+["Final question… Who has a surprise for Lu? 🎁",["Taylor Swift","Harry Potter","Delfina 💕"],2]];
+let i=0,score=0,locked=false; const $=x=>document.getElementById(x);
+function show(x){["welcome","quiz","trick","final"].forEach(y=>$(y).classList.add("hide"));$(x).classList.remove("hide");window.scrollTo({top:0,behavior:"smooth"})}
+function rain(){const z=["💕","⭐","✨","🎀","🍎"];for(let n=0;n<45;n++){let e=document.createElement("span");e.className="c";e.textContent=z[Math.floor(Math.random()*z.length)];e.style.left=Math.random()*100+"vw";e.style.setProperty("--x",(Math.random()*220-110)+"px");e.style.animationDelay=Math.random()*.7+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),4200)}}
+function render(){locked=false;$("feedback").textContent="";$("nextBtn").classList.add("hide");$("count").textContent=`Question ${i+1} of ${qs.length}`;$("bar").style.width=(i/qs.length*100)+"%";$("question").textContent=qs[i][0];$("answers").innerHTML="";
+qs[i][1].forEach((x,n)=>{let b=document.createElement("button");b.className="ans";b.textContent=x;b.addEventListener("click",()=>pick(n,b));$("answers").appendChild(b)})}
+function pick(n,b){if(locked)return;locked=true;let bs=[...document.querySelectorAll("#answers .ans")];if(n===qs[i][2]){score++;b.classList.add("ok");$("feedback").textContent="Correct! 🌟";rain()}else{b.classList.add("no");bs[qs[i][2]].classList.add("ok");$("feedback").textContent="Almost! 💕 The correct answer is highlighted."}$("nextBtn").classList.remove("hide")}
+$("startBtn").addEventListener("click",()=>{show("quiz");render()});
+$("nextBtn").addEventListener("click",()=>{i++;if(i<qs.length)render();else show("trick")});
+document.querySelectorAll(".trickA").forEach(b=>b.addEventListener("click",()=>{$("trickAnswers").classList.add("hide");$("trickMessage").classList.remove("hide");rain()}));
+$("openBtn").addEventListener("click",()=>{$("score").textContent=`Your score: ${score}/${qs.length} ⭐`;show("final");rain()});
+$("vid").addEventListener("ended",()=>{$("ending").classList.remove("hide");rain();$("ending").scrollIntoView({behavior:"smooth",block:"center"})});
+})();
+</script></body></html>

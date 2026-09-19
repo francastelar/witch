@@ -1,0 +1,1 @@
+Versión final: trivia + tarjeta + video integrado. Subir los archivos descomprimidos a la raíz del repo GitHub Pages.
